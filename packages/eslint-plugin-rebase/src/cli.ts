@@ -23,7 +23,7 @@ const run = () => {
     alias: 'f',
     type: 'boolean',
     description: 'Force overwrite ".eslint-rebase.json".'
-  })
+  });
 
   const { _: files , dry, force } = argv as Argv;
 
@@ -52,7 +52,13 @@ const run = () => {
     code: fs.readFileSync(file, 'utf8')
   }));
 
-  const ignores = rebase({ files: filesWithCode });
+  const { ignores, errors } = rebase({ files: filesWithCode });
+
+  if (errors?.length) {
+    logError(`${chalk.red('Errors:')}\n  ${errors.map(error => error.message).join('\n  ')}`);
+
+    return;
+  }
 
   const rebaseFileJson = {
     ignores
@@ -71,7 +77,7 @@ const run = () => {
   }
 
   if (dry) {
-    log(`${chalk.green('would\'ve written')}.`);
+    log(`${chalk.green('in dry mode, but would\'ve written')}:\n${rebaseFileContents}`);
 
     return;
   }

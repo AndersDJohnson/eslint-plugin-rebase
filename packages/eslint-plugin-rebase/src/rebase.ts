@@ -1,42 +1,60 @@
-import { Linter, CLIEngine } from 'eslint';
+import { CLIEngine, Linter } from 'eslint';
 import { RebaseFileOptions, RebaseOptions } from './types';
 
-const rebaseFile = ({ file, eslintConfig } : RebaseFileOptions) => {
-    const linter = new Linter();
+const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
 
     const { code, filename } = file;
 
-    const messages = linter.verify(code, eslintConfig,
-        filename
-    );
-
-    const lines = code.split(/[\r\n]/);
+    const { results } = cliEngine.executeOnText(code, filename);
 
     const ignores: Record<string, boolean> = {};
 
-    for (const message of messages){
-        const key = lines[message.line - 1].trim();
-        ignores[key] = true;
+    for (const result of results) {
+        const { messages } = result;
+
+        const lines = code.split(/[\r\n]/);
+
+        const fatalMessages = messages.filter(message => message.fatal);
+
+        if (fatalMessages.length) {
+            return { errors: fatalMessages };
+        }
+
+        for (const message of messages){
+            const key = lines[message.line - 1].trim();
+            ignores[key] = true;
+        }
     }
 
-    return ignores;
+    return { ignores };
 };
 
-const rebase = ({ files, eslintConfig}: RebaseOptions) => {
+const rebase = ({ files, cliEngine }: RebaseOptions) => {
     const ignores: Record<string, boolean> = {};
 
-    const cli = new CLIEngine({});
+    let errors: Linter.LintMessage[] = [];
+
+    const actualCLIEngine = cliEngine ?? new CLIEngine({});
 
     for (const file of files) {
-        const actualEslintConfig = eslintConfig ?? cli.getConfigForFile(file.filename);
-        const fileIgnores = rebaseFile({ file, eslintConfig: actualEslintConfig });
+        const { ignores: fileIgnores, errors: fileErrors } = rebaseFile({ file, cliEngine: actualCLIEngine });
+
+        if (fileErrors?.length) {
+            errors = [...errors, ...fileErrors];
+            break;
+        }
+
+        if (!fileIgnores) {
+            break;
+        }
+
         for (const fileIgnoreKey of Object.keys(fileIgnores)) {
             const key = `${file.filename}::${fileIgnoreKey}`;
             ignores[key] = true;
         }
     }
 
-    return ignores;
+    return { ignores: (Object.keys(ignores).length > 0 ? ignores : undefined), errors: (errors.length ? errors : undefined) };
 };
 
 export { rebase, rebaseFile };

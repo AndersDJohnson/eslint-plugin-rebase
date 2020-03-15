@@ -1,6 +1,10 @@
-import { Linter } from 'eslint';
+import { CLIEngine } from 'eslint';
 
 export type Ignores = Record<string, boolean>;
+
+export type RebaseManifest = {
+    ignores: Ignores;
+};
 
 export interface File {
     filename: string;
@@ -9,10 +13,10 @@ export interface File {
 
 export interface RebaseFileOptions {
     file: File;
-    eslintConfig: Linter.Config;
+    cliEngine: CLIEngine;
 }
 
 export interface RebaseOptions {
     files: File[];
-    eslintConfig?: Linter.Config;
+    cliEngine?: CLIEngine;
 }

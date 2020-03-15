@@ -1,4 +1,4 @@
-import { Linter } from "eslint";
+import { CLIEngine, Linter } from "eslint";
 import stripIndent from 'strip-indent';
 import { rebase, rebaseFile } from "../rebase";
 
@@ -11,16 +11,18 @@ const eslintConfig = {
     },
     rules: {
         'no-console': 'error'
-    },
-    plugins: [
-        'rebase'
-    ]
+    }
     // TODO: Remove type assertion. Why doesn't it like my ESLint config?
   // @ts-ignore
 } as Linter.Config;
 
+const cliEngine = new CLIEngine({
+    baseConfig: eslintConfig
+});
+
 describe('rebaseFile', () => {
     it('should work', () => {
+
         const code = stripIndent(`
           function f () {}
         
@@ -38,9 +40,11 @@ describe('rebaseFile', () => {
                filename: 'foo.js',
                code,
            },
-            eslintConfig,
+           cliEngine,
         })).toMatchObject({
-            'console.log(\'ok\');': true
+            ignores: {
+                'console.log(\'ok\');': true
+            }
         })
     })
 });
@@ -66,9 +70,11 @@ describe('rebase', () => {
                     code
                 }
             ],
-            eslintConfig,
+            cliEngine,
         })).toMatchObject({
-            'foo.js::console.log(\'ok\');': true
+            ignores: {
+                'foo.js::console.log(\'ok\');': true
+            }
         })
     })
 });

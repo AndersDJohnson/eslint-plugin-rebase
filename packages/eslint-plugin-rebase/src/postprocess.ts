@@ -1,16 +1,29 @@
 import fs from 'fs';
-import { Linter } from "eslint";
-import { Ignores } from './types';
 import path from "path";
+import { Linter } from "eslint";
+import chalk from 'chalk';
+import { RebaseManifest } from './types';
+import { logError } from './log';
 
 interface PostprocessOptions {
     messages: Linter.LintMessage[][],
     filename: string,
-    ignores: Ignores
 }
 
-const postprocess = ({ messages, filename, ignores }: PostprocessOptions) => {
-    // console.log('ADJ postprocess', { messages, messages0: messages?.[0], filename, ignores });
+const postprocess = ({ messages, filename }: PostprocessOptions) => {
+    const rebaseJsonPath = process.cwd() + '/.eslint-rebase.json';
+
+    if (!fs.existsSync(rebaseJsonPath)) {
+        logError(`${chalk.red('could not find JSON file')}: ${rebaseJsonPath}`);
+
+        return messages[0];
+    }
+
+    const rebaseObject = require(rebaseJsonPath)  as RebaseManifest;
+
+    // TODO: Validate manifest syntax.
+
+    const { ignores = {} } = rebaseObject;
 
     const newMessages: Linter.LintMessage[] = [];
 
@@ -27,8 +40,6 @@ const postprocess = ({ messages, filename, ignores }: PostprocessOptions) => {
            newMessages.push(message);
         }
     }
-
-    // console.log('ADJ newMessages', newMessages);
 
     return newMessages;
 };
