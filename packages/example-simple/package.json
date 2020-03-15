@@ -1,16 +1,15 @@
 {
-  "name": "example",
-  "version": "1.0.0",
+  "name": "example-simple",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "private": true,
-  "dependencies": {
-    "eslint-plugin-rebase": "^1.0.0"
-  },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^6.8.0",
+    "eslint-plugin-rebase": "0.0.0"
   },
   "scripts": {
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

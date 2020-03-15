@@ -22,7 +22,7 @@ const rebaseFile = ({ file, eslintConfig } : RebaseFileOptions) => {
     return ignores;
 };
 
-const rebase = ({ files, eslintConfig }: RebaseOptions) => {
+const rebase = ({ files, eslintConfig}: RebaseOptions) => {
     const ignores: Record<string, boolean> = {};
 
     const cli = new CLIEngine({});
