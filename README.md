@@ -1,6 +1,8 @@
 # eslint-plugin-rebase
 > Start linting new code today without having to fix all old code.
 
+![logo](docs/logo-300.png)
+
 Ever wanted to introduce and enforce new ESLint rules to your project, but noticed too many errors in existing code?
 Maybe you didn't have time to fix everything, so you gave up.
 So even new code is being added that might violate the rules you had wanted.
