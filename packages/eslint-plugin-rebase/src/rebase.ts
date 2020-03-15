@@ -2,7 +2,6 @@ import { CLIEngine, Linter } from 'eslint';
 import { RebaseFileOptions, RebaseOptions } from './types';
 
 const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
-
     const { code, filename } = file;
 
     const { results } = cliEngine.executeOnText(code, filename);
@@ -33,6 +32,9 @@ const rebase = ({ files, cliEngine }: RebaseOptions) => {
     const ignores: Record<string, boolean> = {};
 
     let errors: Linter.LintMessage[] = [];
+
+    // @ts-ignore
+    global.ESLINT_REBASE_REBASING = true;
 
     const actualCLIEngine = cliEngine ?? new CLIEngine({});
 
