@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "rebase"
+  ],
+  "rules": {
+    "no-console": "error"
+  }
+}

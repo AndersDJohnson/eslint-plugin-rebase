@@ -1,0 +1,6 @@
+{
+  "ignores": {
+    "src/index.js::console.log('ok');": true,
+    "src/index.js::console.log(\"oops\");": true
+  }
+}
