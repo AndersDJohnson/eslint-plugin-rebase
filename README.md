@@ -1,5 +1,5 @@
 # eslint-plugin-rebase
-> Start linting new code today without having to fix all old code.
+> ⬣⬡ Start ESLinting new code, without fixing all the old.
 
 ![logo](docs/logo-300.png)
 
