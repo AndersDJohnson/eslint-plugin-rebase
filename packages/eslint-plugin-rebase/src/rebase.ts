@@ -6,7 +6,7 @@ const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
 
     const { results } = cliEngine.executeOnText(code, filename);
 
-    const ignores: Record<string, boolean> = {};
+    const ignores: Record<string, Record<string, boolean>> = {};
 
     for (const result of results) {
         const { messages } = result;
@@ -20,8 +20,17 @@ const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
         }
 
         for (const message of messages){
+            const { ruleId } = message;
+
+            if (!ruleId) {
+                break;
+            }
+
+            ignores[ruleId] = ignores[ruleId] ?? {};
+
             const key = lines[message.line - 1].trim();
-            ignores[key] = true;
+
+            ignores[ruleId][key] = true;
         }
     }
 
@@ -29,7 +38,7 @@ const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
 };
 
 const rebase = ({ files, cliEngine }: RebaseOptions) => {
-    const ignores: Record<string, boolean> = {};
+    const ignores: Record<string, Record<string, boolean>> = {};
 
     let errors: Linter.LintMessage[] = [];
 
@@ -50,9 +59,14 @@ const rebase = ({ files, cliEngine }: RebaseOptions) => {
             break;
         }
 
-        for (const fileIgnoreKey of Object.keys(fileIgnores)) {
-            const key = `${file.filename}::${fileIgnoreKey}`;
-            ignores[key] = true;
+        for (const [ruleId, ruleIgnores] of Object.entries(fileIgnores)) {
+            ignores[ruleId] = ignores[ruleId] ?? {};
+
+            for (const ruleIgnoreKey of Object.keys(ruleIgnores)) {
+                const key = `${file.filename}::${ruleIgnoreKey}`;
+
+                ignores[ruleId][key] = true;
+            }
         }
     }
 

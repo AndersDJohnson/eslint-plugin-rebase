@@ -43,7 +43,9 @@ describe('rebaseFile', () => {
            cliEngine,
         })).toMatchObject({
             ignores: {
-                'console.log(\'ok\');': true
+                'no-console': {
+                    'console.log(\'ok\');': true
+                }
             }
         })
     })
@@ -73,7 +75,9 @@ describe('rebase', () => {
             cliEngine,
         })).toMatchObject({
             ignores: {
-                'foo.js::console.log(\'ok\');': true
+                'no-console': {
+                    'foo.js::console.log(\'ok\');': true
+                }
             }
         })
     })

@@ -19,7 +19,7 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
         return messages[0];
     }
 
-    const rebaseObject = require(rebaseJsonPath)  as RebaseManifest;
+    const rebaseObject = require(rebaseJsonPath) as RebaseManifest;
 
     // TODO: Validate manifest syntax.
 
@@ -28,6 +28,12 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
     const newMessages: Linter.LintMessage[] = [];
 
     for (const message of messages[0]) {
+        const { ruleId } = message;
+
+        if (!ruleId) {
+            break;
+        }
+
         const text = fs.readFileSync(filename, 'utf8');
         const lines = text.split(/[\r\n]/);
         const line = lines[message.line - 1].trim();
@@ -36,7 +42,7 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
 
         const key = `${relativeFilename}::${line}`;
 
-        if (!ignores[key]) {
+        if (!ignores[ruleId]?.[key]) {
            newMessages.push(message);
         }
     }
