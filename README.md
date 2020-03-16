@@ -28,8 +28,10 @@ This creates a `.eslint-rebase.json` file that looks something like this (though
 ```json
 {
   "ignores": {
-    "src/index.js::console.log('ok');": true,
-    "src/index.js::console.log(\"oops\");": true
+    "no-console": {
+      "src/index.js::console.log('ok');": true,
+      "src/index.js::console.log(\"oops\");": true
+    }
   }
 }
 ```
