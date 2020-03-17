@@ -6,6 +6,7 @@
   "bin": {
     "eslint-rebase": "dist/cli.js"
   },
+  "files": ["dist", "!__tests__"],
   "scripts": {
     "test": "jest",
     "build": "tsc",
