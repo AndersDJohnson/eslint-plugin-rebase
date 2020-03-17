@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-rebase",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Start ESLinting new code, without fixing all the old.",
   "main": "index.js",
   "bin": {
@@ -9,7 +9,7 @@
   "files": ["dist", "!__tests__"],
   "scripts": {
     "test": "jest",
-    "build": "tsc",
+    "build": "cp ../../README.md . && tsc",
     "build:watch": "tsc -w"
   },
   "keywords": [
@@ -17,6 +17,7 @@
     "eslint-plugin"
   ],
   "author": "Anders D. Johnson",
+  "repository": "AndersDJohnson/eslint-plugin-rebase",
   "license": "ISC",
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.7.0",
