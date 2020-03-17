@@ -6,10 +6,10 @@
   "bin": {
     "eslint-rebase": "dist/cli.js"
   },
-  "files": ["dist", "!__tests__"],
+  "files": ["dist", "!__tests__", "docs"],
   "scripts": {
     "test": "jest",
-    "build": "cp ../../README.md . && tsc",
+    "build": "cp -r ../../{docs,README.md} . && tsc",
     "build:watch": "tsc -w"
   },
   "keywords": [
