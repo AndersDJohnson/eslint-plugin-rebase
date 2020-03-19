@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "author": "Anders D. Johnson",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "lerna": "^3.20.2"
   }

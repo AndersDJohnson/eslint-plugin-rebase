@@ -19,7 +19,7 @@
   ],
   "author": "Anders D. Johnson",
   "repository": "AndersDJohnson/eslint-plugin-rebase",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.7.0",
     "@types/eslint": "^6.1.8",
