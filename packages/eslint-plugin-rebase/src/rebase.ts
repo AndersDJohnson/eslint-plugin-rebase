@@ -1,5 +1,6 @@
 import { CLIEngine, Linter } from 'eslint';
 import { RebaseFileOptions, RebaseOptions } from './types';
+import { log } from './log';
 
 const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
     const { code, filename } = file;
@@ -19,16 +20,18 @@ const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
             return { errors: fatalMessages };
         }
 
-        for (const message of messages){
-            const { ruleId } = message;
+        for (const message of messages) {
+            const { ruleId, line } = message;
 
             if (!ruleId) {
                 break;
             }
 
+            log('...violation on line', line, ':', ruleId);
+
             ignores[ruleId] = ignores[ruleId] ?? {};
 
-            const key = lines[message.line - 1].trim();
+            const key = lines[line - 1].trim();
 
             ignores[ruleId][key] = true;
         }
@@ -48,7 +51,13 @@ const rebase = ({ files, cliEngine }: RebaseOptions) => {
     const actualCLIEngine = cliEngine ?? new CLIEngine({});
 
     for (const file of files) {
+        const { filename } = file;
+
+        log('Rebasing:', filename);
+
         const { ignores: fileIgnores, errors: fileErrors } = rebaseFile({ file, cliEngine: actualCLIEngine });
+
+        log('...rebased!');
 
         if (fileErrors?.length) {
             errors = [...errors, ...fileErrors];
