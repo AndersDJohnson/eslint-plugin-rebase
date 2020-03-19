@@ -7,31 +7,14 @@ import { flatten, uniq } from 'lodash';
 import chalk from 'chalk';
 import { rebase } from './rebase';
 import { log, logError } from './log';
-import {Ignores, RebaseManifest} from "./types";
+import { RebaseManifest } from "./types";
+import { mergeInto } from "./merge";
 
 interface Argv {
   _?: string[];
   dry?: boolean;
   force?: boolean;
   merge?: boolean;
-}
-
-const mergeInto = (merging: RebaseManifest, merged: RebaseManifest = {}): RebaseManifest => {
-    const mergedIgnores: Ignores = { ...merged.ignores };
-
-    if (merging.ignores) {
-      for (const [existingFilepath, existingRules] of Object.entries(merging.ignores)) {
-        mergedIgnores[existingFilepath] = mergedIgnores[existingFilepath] ?? {};
-
-        for (const [existingRule, existingLines] of Object.entries(existingRules)) {
-          mergedIgnores[existingFilepath][existingRule] = mergedIgnores[existingFilepath][existingRule] ?? [];
-
-          mergedIgnores[existingFilepath][existingRule] = uniq([...mergedIgnores[existingFilepath][existingRule], ...existingLines]);
-        }
-      }
-    }
-
-    return merged;
 }
 
 const run = () => {
@@ -66,6 +49,7 @@ const run = () => {
 
   if (!merge && !force && fs.existsSync(rebaseFilePath)) {
     logError(`${chalk.red('Won\'t overwrite')} without \`--force\` option.`);
+    log('Or use `--merge` option.');
 
     process.exit(1);
   }
@@ -108,6 +92,7 @@ const run = () => {
 
   if (!merge && !force && fs.existsSync(rebaseFilePath)) {
     logError(`${chalk.red('Won\'t overwrite')} without \`--force\` option.`);
+    log('Or use `--merge` option.');
 
     process.exit(1);
   }

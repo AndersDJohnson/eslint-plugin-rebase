@@ -75,8 +75,10 @@ describe('rebase', () => {
             cliEngine,
         })).toMatchObject({
             ignores: {
-                'no-console': {
-                    'foo.js::console.log(\'ok\');': true
+                'foo.js': {
+                    'no-console': [
+                        'console.log(\'ok\');'
+                    ]
                 }
             }
         })
