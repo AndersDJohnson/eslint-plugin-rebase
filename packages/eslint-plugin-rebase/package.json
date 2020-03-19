@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-rebase",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Start ESLinting new code, without fixing all the old.",
   "main": "index.js",
   "bin": {
