@@ -9,7 +9,7 @@
   "files": ["dist", "!__tests__", "docs", "!.*"],
   "scripts": {
     "test": "jest",
-    "build": "cp -r ../../{docs,README.md} . && tsc",
+    "build": "cp -r ../../{docs,README.md,LICENSE} . && tsc",
     "build:watch": "tsc -w",
     "type-check": "tsc --noEmit"
   },
