@@ -29,11 +29,21 @@ const run = () => {
 
   if (!files?.length) {
     logError(chalk.red('must provide files argument'));
-    return;
+    process.exit(1);
   }
 
   if (dry) {
-    log('in dry mode')
+    log('In dry mode.')
+  }
+
+  const rebaseFilePath = '.eslint-rebase.json';
+
+  log(`Using file "${rebaseFilePath}".`);
+
+  if (!force && fs.existsSync(rebaseFilePath)) {
+    logError(`${chalk.red('Won\'t overwrite')} without \`--force\` option.`);
+
+    process.exit(1);
   }
 
   const filesExpanded = uniq(flatten(files.map((file: string) => glob.sync(file, {
@@ -41,7 +51,7 @@ const run = () => {
   }))));
 
   if (!filesExpanded.length) {
-    logError(chalk.red('no files found'));
+    logError(chalk.red('No files found'));
     return;
   }
 
@@ -64,27 +74,23 @@ const run = () => {
     ignores
   };
 
-  const rebaseFilePath = '.eslint-rebase.json';
-
-  log(`using file "${rebaseFilePath}".`)
-
   const rebaseFileContents = `${JSON.stringify(rebaseFileJson, null, 2 )}\n`;
 
   if (!force && fs.existsSync(rebaseFilePath)) {
-    logError(`${chalk.red('won\'t overwrite')} without \`--force\` option.`)
+    logError(`${chalk.red('Won\'t overwrite')} without \`--force\` option.`);
 
     process.exit(1);
   }
 
   if (dry) {
-    log(`${chalk.green('in dry mode, but would\'ve written')}:\n${rebaseFileContents}`);
+    log(`${chalk.green('In dry mode, but would\'ve written')}:\n${rebaseFileContents}`);
 
     return;
   }
 
   fs.writeFileSync(rebaseFilePath, rebaseFileContents);
 
-  log(`${chalk.green('wrote ignores to')} "${rebaseFilePath}".`);
+  log(`${chalk.green('Wrote ignores to')} "${rebaseFilePath}".`);
 };
 
 run();
