@@ -20,7 +20,7 @@ npm add -D eslint-plugin-rebase
 Use our CLI to initialize, pointing it to your source files:
 
 ```shell
-eslint-rebase src/**
+eslint-rebase 'src/**'
 ```
 
 This creates a `.eslint-rebase.json` file that looks something like this (though you may have no `ignores` initially):
