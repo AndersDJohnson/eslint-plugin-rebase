@@ -1,16 +1,10 @@
-import { Linter } from "eslint";
-import { postprocess } from "./postprocess";
+import { processor } from "./processor";
 
 const processors = {
-    '.js' : {
-        postprocess(messages: Linter.LintMessage[][], filename: string) {
-            // @ts-ignore
-            if (global.ESLINT_REBASE_REBASING) {
-                return messages[0];
-            }
-            return postprocess({ messages, filename });
-        }
-    }
+    '.js' : processor,
+    '.jsx' : processor,
+    '.ts' : processor,
+    '.tsx' : processor
 };
 
 const plugin = {
