@@ -6,7 +6,12 @@
   "bin": {
     "eslint-rebase": "dist/cli.js"
   },
-  "files": ["dist", "!__tests__", "docs", "!.*"],
+  "files": [
+    "dist",
+    "!__tests__",
+    "docs",
+    "!.*"
+  ],
   "scripts": {
     "test": "jest",
     "build": "cp -r ../../{docs,README.md,LICENSE} . && tsc",

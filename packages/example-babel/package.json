@@ -19,5 +19,6 @@
   },
   "keywords": [],
   "author": "Anders D. Johnson",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }
