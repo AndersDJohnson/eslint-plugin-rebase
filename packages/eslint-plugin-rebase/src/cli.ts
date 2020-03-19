@@ -7,11 +7,31 @@ import { flatten, uniq } from 'lodash';
 import chalk from 'chalk';
 import { rebase } from './rebase';
 import { log, logError } from './log';
+import {Ignores, RebaseManifest} from "./types";
 
 interface Argv {
   _?: string[];
   dry?: boolean;
   force?: boolean;
+  merge?: boolean;
+}
+
+const mergeInto = (merging: RebaseManifest, merged: RebaseManifest = {}): RebaseManifest => {
+    const mergedIgnores: Ignores = { ...merged.ignores };
+
+    if (merging.ignores) {
+      for (const [existingFilepath, existingRules] of Object.entries(merging.ignores)) {
+        mergedIgnores[existingFilepath] = mergedIgnores[existingFilepath] ?? {};
+
+        for (const [existingRule, existingLines] of Object.entries(existingRules)) {
+          mergedIgnores[existingFilepath][existingRule] = mergedIgnores[existingFilepath][existingRule] ?? [];
+
+          mergedIgnores[existingFilepath][existingRule] = uniq([...mergedIgnores[existingFilepath][existingRule], ...existingLines]);
+        }
+      }
+    }
+
+    return merged;
 }
 
 const run = () => {
@@ -23,9 +43,13 @@ const run = () => {
     alias: 'f',
     type: 'boolean',
     description: 'Force overwrite ".eslint-rebase.json".'
+  }).option('merge', {
+    alias: 'm',
+    type: 'boolean',
+    description: 'Merge into ".eslint-rebase.json".'
   });
 
-  const { _: files , dry, force } = argv as Argv;
+  const { _: files , dry, force, merge } = argv as Argv;
 
   if (!files?.length) {
     logError(chalk.red('must provide files argument'));
@@ -40,7 +64,7 @@ const run = () => {
 
   log(`Using file "${rebaseFilePath}".`);
 
-  if (!force && fs.existsSync(rebaseFilePath)) {
+  if (!merge && !force && fs.existsSync(rebaseFilePath)) {
     logError(`${chalk.red('Won\'t overwrite')} without \`--force\` option.`);
 
     process.exit(1);
@@ -70,13 +94,19 @@ const run = () => {
     return;
   }
 
-  const rebaseFileJson = {
+  let rebaseFileJson: RebaseManifest = {
     ignores
   };
 
+  if (merge && fs.existsSync(rebaseFilePath)) {
+    const existing: RebaseManifest = JSON.parse(fs.readFileSync(rebaseFilePath, 'utf8'));
+
+    rebaseFileJson = mergeInto(rebaseFileJson, existing);
+  }
+
   const rebaseFileContents = `${JSON.stringify(rebaseFileJson, null, 2 )}\n`;
 
-  if (!force && fs.existsSync(rebaseFilePath)) {
+  if (!merge && !force && fs.existsSync(rebaseFilePath)) {
     logError(`${chalk.red('Won\'t overwrite')} without \`--force\` option.`);
 
     process.exit(1);

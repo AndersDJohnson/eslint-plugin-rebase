@@ -3,7 +3,7 @@ import { CLIEngine } from 'eslint';
 export type Ignores = Record<string, Record<string, string[]>>;
 
 export type RebaseManifest = {
-    ignores: Ignores;
+    ignores?: Ignores;
 };
 
 export interface File {
