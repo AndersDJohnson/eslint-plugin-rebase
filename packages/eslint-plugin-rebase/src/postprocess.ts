@@ -40,9 +40,7 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
 
         const relativeFilename = path.relative(process.cwd(), filename);
 
-        const key = `${relativeFilename}::${line}`;
-
-        if (!ignores[ruleId]?.[key]) {
+        if (!ignores[relativeFilename]?.[ruleId]?.includes(line)) {
            newMessages.push(message);
         }
     }

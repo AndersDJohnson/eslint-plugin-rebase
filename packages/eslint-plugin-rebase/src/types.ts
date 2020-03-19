@@ -1,6 +1,6 @@
 import { CLIEngine } from 'eslint';
 
-export type Ignores = Record<string, Record<string, boolean>>;
+export type Ignores = Record<string, Record<string, string[]>>;
 
 export type RebaseManifest = {
     ignores: Ignores;

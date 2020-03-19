@@ -10,7 +10,8 @@
   "scripts": {
     "test": "jest",
     "build": "cp -r ../../{docs,README.md} . && tsc",
-    "build:watch": "tsc -w"
+    "build:watch": "tsc -w",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [
     "eslint",

@@ -41,7 +41,7 @@ const rebaseFile = ({ file, cliEngine } : RebaseFileOptions) => {
 };
 
 const rebase = ({ files, cliEngine }: RebaseOptions) => {
-    const ignores: Record<string, Record<string, boolean>> = {};
+    const ignores: Record<string, Record<string, string[]>> = {};
 
     let errors: Linter.LintMessage[] = [];
 
@@ -68,13 +68,13 @@ const rebase = ({ files, cliEngine }: RebaseOptions) => {
             break;
         }
 
+        ignores[filename] = ignores[filename] ?? {};
+
         for (const [ruleId, ruleIgnores] of Object.entries(fileIgnores)) {
-            ignores[ruleId] = ignores[ruleId] ?? {};
+            ignores[filename][ruleId] = ignores[filename][ruleId] ?? [];
 
-            for (const ruleIgnoreKey of Object.keys(ruleIgnores)) {
-                const key = `${file.filename}::${ruleIgnoreKey}`;
-
-                ignores[ruleId][key] = true;
+            for (const lineHash of Object.keys(ruleIgnores)) {
+                ignores[filename][ruleId].push(lineHash);
             }
         }
     }
