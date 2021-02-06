@@ -7,7 +7,7 @@ Ever wanted to introduce and enforce new ESLint rules to your project, but notic
 Maybe you didn't have time to fix everything, so you gave up.
 So even new code is being added that might violate the rules you had wanted.
 
-But what if you could whitelist all existing violations, and have ESLint only report on new or changed code?
+But what if you could allow all existing violations, and have ESLint only report on new or changed code?
 
 `eslint-plugin-rebase` empowers you to do exactly that!
 
@@ -42,7 +42,7 @@ This `.eslint-rebase.json` file should be commited to your repository.
 
 Suppose you consider adding a new rule to your ESLint config (e.g., `no-console`).
 If you run `eslint`, you may see many existing violations.
-If you want to whitelist them, run `eslint-rebase` again, and they will be written to `ignores` in `.eslint-rebase.json`.
+If you want to allow them, run `eslint-rebase` again, and they will be written to `ignores` in `.eslint-rebase.json`.
 Running `eslint` again, you'll see it passes with no errors.
 
 ![](docs/init.png)
