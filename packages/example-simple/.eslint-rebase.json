@@ -1,5 +1,5 @@
 {
-  "ignores": {
+  "warnings": {
     "src/index.js": {
       "no-console": [
         "console.log('ok');",

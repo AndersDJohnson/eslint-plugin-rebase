@@ -1,51 +1,51 @@
-import fs from 'fs';
+import fs from "fs";
 import path from "path";
 import { Linter } from "eslint";
-import chalk from 'chalk';
-import { RebaseManifest } from './types';
-import { logError } from './log';
+import chalk from "chalk";
+import { RebaseManifest } from "./types";
+import { logError } from "./log";
 
 interface PostprocessOptions {
-    messages: Linter.LintMessage[][],
-    filename: string,
+  messages: Linter.LintMessage[][];
+  filename: string;
 }
 
 const postprocess = ({ messages, filename }: PostprocessOptions) => {
-    const rebaseJsonPath = process.cwd() + '/.eslint-rebase.json';
+  const rebaseJsonPath = process.cwd() + "/.eslint-rebase.json";
 
-    if (!fs.existsSync(rebaseJsonPath)) {
-        logError(`${chalk.red('could not find JSON file')}: ${rebaseJsonPath}`);
+  if (!fs.existsSync(rebaseJsonPath)) {
+    logError(`${chalk.red("could not find JSON file")}: ${rebaseJsonPath}`);
 
-        return messages[0];
+    return messages[0];
+  }
+
+  const rebaseObject = require(rebaseJsonPath) as RebaseManifest;
+
+  // TODO: Validate manifest syntax.
+
+  const { ignores = {}, warnings = {} } = rebaseObject;
+
+  const newMessages: Linter.LintMessage[] = [];
+
+  for (const message of messages[0]) {
+    const { ruleId } = message;
+
+    if (!ruleId) {
+      break;
     }
 
-    const rebaseObject = require(rebaseJsonPath) as RebaseManifest;
+    const text = fs.readFileSync(filename, "utf8");
+    const lines = text.split(/[\r\n]/);
+    const line = lines[message.line - 1].trim();
 
-    // TODO: Validate manifest syntax.
+    const relativeFilename = path.relative(process.cwd(), filename);
 
-    const { ignores = {} } = rebaseObject;
-
-    const newMessages: Linter.LintMessage[] = [];
-
-    for (const message of messages[0]) {
-        const { ruleId } = message;
-
-        if (!ruleId) {
-            break;
-        }
-
-        const text = fs.readFileSync(filename, 'utf8');
-        const lines = text.split(/[\r\n]/);
-        const line = lines[message.line - 1].trim();
-
-        const relativeFilename = path.relative(process.cwd(), filename);
-
-        if (!ignores[relativeFilename]?.[ruleId]?.includes(line)) {
-           newMessages.push(message);
-        }
+    if (!ignores[relativeFilename]?.[ruleId]?.includes(line)) {
+      newMessages.push(message);
     }
+  }
 
-    return newMessages;
+  return newMessages;
 };
 
 export { postprocess };

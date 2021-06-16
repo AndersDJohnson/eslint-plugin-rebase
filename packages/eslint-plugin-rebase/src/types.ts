@@ -1,22 +1,23 @@
-import { CLIEngine } from 'eslint';
+import { CLIEngine } from "eslint";
 
-export type Ignores = Record<string, Record<string, string[]>>;
+export type Entries = Record<string, Record<string, string[]>>;
 
 export type RebaseManifest = {
-    ignores?: Ignores;
+  ignores?: Entries;
+  warnings?: Entries;
 };
 
 export interface File {
-    filename: string;
-    code: string;
+  filename: string;
+  code: string;
 }
 
 export interface RebaseFileOptions {
-    file: File;
-    cliEngine: CLIEngine;
+  file: File;
+  cliEngine: CLIEngine;
 }
 
 export interface RebaseOptions {
-    files: File[];
-    cliEngine?: CLIEngine;
+  files: File[];
+  cliEngine?: CLIEngine;
 }
