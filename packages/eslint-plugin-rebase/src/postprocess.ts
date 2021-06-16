@@ -38,7 +38,9 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
     const lines = text.split(/[\r\n]/);
     const line = lines[message.line - 1].trim();
 
-    const relativeFilename = path.relative(process.cwd(), filename);
+    const relativeFilename = path
+      .relative(process.cwd(), filename)
+      .replace(/\\/g, "/");
 
     if (warnings[relativeFilename]?.[ruleId]?.includes(line)) {
       newMessages.push({
