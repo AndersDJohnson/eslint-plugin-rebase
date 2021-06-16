@@ -3,6 +3,7 @@ import stripIndent from "strip-indent";
 import { rebase, rebaseFile } from "../rebase";
 
 const eslintConfig = {
+  root: true,
   parserOptions: {
     ecmaVersion: 2017,
   },
@@ -16,6 +17,7 @@ const eslintConfig = {
 
 const cliEngine = new CLIEngine({
   baseConfig: eslintConfig,
+  useEslintrc: false,
 });
 
 describe("rebaseFile", () => {
