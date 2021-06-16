@@ -14,10 +14,11 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "cp -r ../../{docs,README.md,LICENSE} . && tsc",
+    "build": "tsc",
+    "build:publish": "npm run build && cp -r ../../{docs,README.md,LICENSE}",
     "build:watch": "tsc -w",
     "type-check": "tsc --noEmit",
-    "prepublish": "npm test && npm run build"
+    "prepublishOnly": "npm test && npm run build"
   },
   "keywords": [
     "eslint",
