@@ -4,6 +4,10 @@
   "private": true,
   "author": "Anders D. Johnson",
   "license": "MIT",
+  "scripts": {
+    "build": "lerna run --scope eslint-plugin-rebase build",
+    "test": "lerna run --scope eslint-plugin-rebase test"
+  },
   "devDependencies": {
     "lerna": "^3.20.2",
     "prettier": "^2.3.1"
