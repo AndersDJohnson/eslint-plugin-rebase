@@ -36,4 +36,8 @@ jobs:
         uses: wearerequired/lint-action@v1.10.0
         with:
           eslint: true
+          eslint_dir: packages/eslint-plugin-rebase/
+          eslint_extensions: js,ts
           prettier: true
+          prettier_dir: packages/eslint-plugin-rebase/
+          prettier_extensions: js,ts
