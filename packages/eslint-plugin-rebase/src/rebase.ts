@@ -45,7 +45,6 @@ const rebase = ({ files, cliEngine }: RebaseOptions) => {
 
   let errors: Linter.LintMessage[] = [];
 
-  // @ts-ignore
   global.ESLINT_REBASE_REBASING = true;
 
   const actualCLIEngine = cliEngine ?? new CLIEngine({});
