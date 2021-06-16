@@ -12,8 +12,6 @@ const eslintConfig = {
   rules: {
     "no-console": "error",
   },
-  // TODO: Remove type assertion. Why doesn't it like my ESLint config?
-  // @ts-ignore
 } as Linter.Config;
 
 const cliEngine = new CLIEngine({

@@ -7,11 +7,15 @@
   "scripts": {
     "build": "lerna run --scope eslint-plugin-rebase build",
     "test": "lerna run --scope eslint-plugin-rebase test",
+    "lint": "eslint 'packages/**/*.{js,ts}'",
     "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
     "eslint": "^7.28.0",
     "lerna": "^3.20.2",
-    "prettier": "^2.3.1"
+    "prettier": "^2.3.1",
+    "typescript": "^4.3.2"
   }
 }

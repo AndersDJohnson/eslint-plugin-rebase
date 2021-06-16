@@ -1,4 +1,5 @@
 {
+  "root": true,
   "plugins": ["rebase"],
   "rules": {
     "no-console": "error"
