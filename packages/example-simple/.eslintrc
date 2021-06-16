@@ -1,7 +1,5 @@
 {
-  "plugins": [
-    "rebase"
-  ],
+  "plugins": ["rebase"],
   "rules": {
     "no-console": "error"
   }

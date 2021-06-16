@@ -1,10 +1,7 @@
 {
   "warnings": {
     "src/index.js": {
-      "no-console": [
-        "console.log('ok');",
-        "console.log(\"oops\");"
-      ]
+      "no-console": ["console.log('ok');", "console.log(\"oops\");"]
     }
   }
 }

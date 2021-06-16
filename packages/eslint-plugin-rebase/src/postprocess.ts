@@ -42,6 +42,11 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
 
     if (!ignores[relativeFilename]?.[ruleId]?.includes(line)) {
       newMessages.push(message);
+    } else if (warnings[relativeFilename]?.[ruleId]?.includes(line)) {
+      newMessages.push({
+        ...message,
+        severity: 1,
+      });
     }
   }
 
