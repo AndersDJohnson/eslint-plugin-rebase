@@ -5,6 +5,7 @@
   "author": "Anders D. Johnson",
   "license": "MIT",
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "lerna": "^3.20.2",
+    "prettier": "^2.3.1"
   }
 }

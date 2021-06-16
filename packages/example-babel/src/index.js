@@ -1,5 +1,4 @@
-
-console.log('ok');
+console.log("ok");
 
 (async () => {
   if (Math.random() > 0.5) {
