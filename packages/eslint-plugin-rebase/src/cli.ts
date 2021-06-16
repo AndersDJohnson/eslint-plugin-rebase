@@ -15,6 +15,7 @@ interface Argv {
   dry?: boolean;
   force?: boolean;
   merge?: boolean;
+  warning?: boolean;
 }
 
 const run = () => {
@@ -33,9 +34,14 @@ const run = () => {
       alias: "m",
       type: "boolean",
       description: 'Merge into ".eslint-rebase.json".',
+    })
+    .option("warning", {
+      alias: "w",
+      type: "boolean",
+      description: "Set to warnings instead of ignoring.",
     });
 
-  const { _: files, dry, force, merge } = argv as Argv;
+  const { _: files, dry, force, merge, warning } = argv as Argv;
 
   if (!files?.length) {
     logError(chalk.red("must provide files argument"));
@@ -91,9 +97,13 @@ const run = () => {
     return;
   }
 
-  let rebaseFileJson: RebaseManifest = {
-    ignores,
-  };
+  let rebaseFileJson: RebaseManifest = {};
+
+  if (warning) {
+    rebaseFileJson.warnings = ignores;
+  } else {
+    rebaseFileJson.ignores = ignores;
+  }
 
   if (merge && fs.existsSync(rebaseFilePath)) {
     const existing: RebaseManifest = JSON.parse(

@@ -1,9 +1,10 @@
 import { CLIEngine } from "eslint";
 
-export type Ignores = Record<string, Record<string, string[]>>;
+export type Entries = Record<string, Record<string, string[]>>;
 
 export type RebaseManifest = {
-  ignores?: Ignores;
+  ignores?: Entries;
+  warnings?: Entries;
 };
 
 export interface File {

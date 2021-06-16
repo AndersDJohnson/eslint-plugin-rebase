@@ -12,6 +12,14 @@ describe("merge", () => {
             ruleB: ["line1"],
           },
         },
+        warnings: {
+          fileA: {
+            ruleA: ["warning1"],
+          },
+          fileB: {
+            ruleB: ["warning1"],
+          },
+        },
       };
 
       const existing = {
@@ -22,6 +30,15 @@ describe("merge", () => {
           },
           fileC: {
             ruleC: ["line4"],
+          },
+        },
+        warnings: {
+          fileA: {
+            ruleA: ["warning2"],
+            ruleB: ["warning3"],
+          },
+          fileC: {
+            ruleC: ["warning4"],
           },
         },
       };
@@ -37,6 +54,18 @@ describe("merge", () => {
           },
           fileC: {
             ruleC: ["line4"],
+          },
+        },
+        warnings: {
+          fileA: {
+            ruleA: ["warning2", "warning1"],
+            ruleB: ["warning3"],
+          },
+          fileB: {
+            ruleB: ["warning1"],
+          },
+          fileC: {
+            ruleC: ["warning4"],
           },
         },
       });

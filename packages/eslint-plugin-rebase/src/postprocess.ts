@@ -23,7 +23,7 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
 
   // TODO: Validate manifest syntax.
 
-  const { ignores = {} } = rebaseObject;
+  const { ignores = {}, warnings = {} } = rebaseObject;
 
   const newMessages: Linter.LintMessage[] = [];
 
@@ -40,7 +40,12 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
 
     const relativeFilename = path.relative(process.cwd(), filename);
 
-    if (!ignores[relativeFilename]?.[ruleId]?.includes(line)) {
+    if (warnings[relativeFilename]?.[ruleId]?.includes(line)) {
+      newMessages.push({
+        ...message,
+        severity: 1,
+      });
+    } else if (!ignores[relativeFilename]?.[ruleId]?.includes(line)) {
       newMessages.push(message);
     }
   }
