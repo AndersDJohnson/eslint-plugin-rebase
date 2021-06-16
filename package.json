@@ -10,6 +10,7 @@
     "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
+    "eslint": "^7.28.0",
     "lerna": "^3.20.2",
     "prettier": "^2.3.1"
   }
