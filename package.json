@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run --scope eslint-plugin-rebase build",
-    "test": "lerna run --scope eslint-plugin-rebase test"
+    "test": "lerna run --scope eslint-plugin-rebase test",
+    "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
     "lerna": "^3.20.2",
