@@ -1,4 +1,5 @@
 # eslint-plugin-rebase
+
 > ⬣⬡ Start ESLinting new code, without fixing all the old.
 
 ![logo](docs/logo-400.png)
@@ -23,16 +24,19 @@ Use our CLI to initialize, pointing it to your source files:
 eslint-rebase 'src/**'
 ```
 
+Or alternatively, to set a warnings rather than ignore:
+
+```shell
+eslint-rebase --warning 'src/**'
+```
+
 This creates a `.eslint-rebase.json` file that looks something like this (though you may have no `ignores` initially):
 
 ```json
 {
   "ignores": {
     "src/index.js": {
-      "no-console": [
-        "console.log('ok');",
-        "console.log(\"oops\");"
-      ]
+      "no-console": ["console.log(\"ok\");", "console.log(\"oops\");"]
     }
   }
 }
