@@ -24,7 +24,7 @@ Use our CLI to initialize, pointing it to your source files:
 eslint-rebase 'src/**'
 ```
 
-Or alternatively, to set a warnings rather than ignore:
+Or alternatively, to set as warnings rather than ignore:
 
 ```shell
 eslint-rebase --warning 'src/**'
