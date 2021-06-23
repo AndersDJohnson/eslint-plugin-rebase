@@ -2,6 +2,7 @@
   "root": true,
   "plugins": ["rebase"],
   "rules": {
-    "no-console": "error"
+    "no-console": "error",
+    "no-extra-semi": "error"
   }
 }
