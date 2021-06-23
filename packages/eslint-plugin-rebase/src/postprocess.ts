@@ -14,7 +14,7 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
   const rebaseJsonPath = process.cwd() + "/.eslint-rebase.json";
 
   if (!fs.existsSync(rebaseJsonPath)) {
-    logError(`${chalk.red("could not find JSON file")}: ${rebaseJsonPath}`);
+    logError(`${chalk.yellow("could not find JSON file")}: ${rebaseJsonPath}`);
 
     return messages[0];
   }
