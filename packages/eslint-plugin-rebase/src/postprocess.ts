@@ -14,7 +14,11 @@ const postprocess = ({ messages, filename }: PostprocessOptions) => {
   const rebaseJsonPath = process.cwd() + "/.eslint-rebase.json";
 
   if (!fs.existsSync(rebaseJsonPath)) {
-    logError(`${chalk.yellow("could not find JSON file")}: ${rebaseJsonPath}`);
+    logError(
+      chalk.yellow(
+        'Warning: Could not find manifest file at ".eslint-rebase.json". To create one, use the `eslint-rebase` CLI.'
+      )
+    );
 
     return messages[0];
   }
