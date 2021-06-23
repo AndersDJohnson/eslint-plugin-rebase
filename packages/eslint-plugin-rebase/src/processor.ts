@@ -8,6 +8,7 @@ const processor = {
     }
     return postprocess({ messages, filename });
   },
+  supportsAutofix: true,
 };
 
 export { processor };
