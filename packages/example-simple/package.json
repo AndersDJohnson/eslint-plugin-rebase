@@ -9,8 +9,7 @@
     "eslint-plugin-rebase": "*"
   },
   "scripts": {
-    "lint": "eslint src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src"
   },
   "keywords": [],
   "author": "Anders D. Johnson",

@@ -5,8 +5,8 @@
   "author": "Anders D. Johnson",
   "license": "MIT",
   "scripts": {
-    "build": "lerna run --scope eslint-plugin-rebase build",
-    "test": "lerna run --scope eslint-plugin-rebase test",
+    "build": "lerna run build",
+    "test": "lerna run test",
     "lint": "eslint 'packages/**/*.{js,ts}'",
     "postinstall": "lerna bootstrap"
   },
