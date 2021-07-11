@@ -66,7 +66,7 @@ const rebase = ({ files, cliEngine }: RebaseOptions) => {
       break;
     }
 
-    if (!fileIgnores) {
+    if (!fileIgnores || !Object.keys(fileIgnores).length) {
       break;
     }
 
