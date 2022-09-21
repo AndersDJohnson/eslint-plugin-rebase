@@ -4,6 +4,7 @@
   "private": true,
   "author": "Anders D. Johnson",
   "license": "MIT",
+  "funding": "https://github.com/sponsors/AndersDJohnson",
   "scripts": {
     "build": "lerna run --scope eslint-plugin-rebase build",
     "test": "lerna run --scope eslint-plugin-rebase test",
