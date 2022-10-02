@@ -58,7 +58,7 @@ you'll see those new lines start to report errors.
 
 ## Prior Art
 
-Tools like [disable-eslint-issues-cli](https://github.com/akonchady/disable-eslint-issues-cli) and [suppress-eslint-errors](https://github.com/Faithlife/suppress-eslint-errors)
+Tools like [eslint-interactive](https://github.com/mizdra/eslint-interactive) and [disable-eslint-issues-cli](https://github.com/akonchady/disable-eslint-issues-cli) and [suppress-eslint-errors](https://github.com/Faithlife/suppress-eslint-errors)
 let you add `eslint-disable` comments to each violation in your source code,
 but that can be noisy and invasive, may encourage copy/pasting of disable comments along with code,
 and even make disabling seem acceptable (rather than an exception to be used as sparingly as is feasible).
